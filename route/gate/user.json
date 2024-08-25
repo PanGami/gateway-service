@@ -1,0 +1,44 @@
+[
+    {
+        "path": "/api/v1/user/list",
+        "method": "GET",
+        "module": "user",
+        "tag": "user_list",
+        "endpoint_filter": "user_list"        
+    },
+    {
+        "path": "/api/v1/user/create",
+        "method": "POST",
+        "module": "user",
+        "tag": "user_create",
+        "endpoint_filter": "user_create"        
+    },
+    {
+        "path": "/api/v1/user/detail/:id",
+        "method": "GET",
+        "module": "user",
+        "tag": "user_detail",
+        "endpoint_filter": "user_detail"        
+    },
+    {
+        "path": "/api/v1/user/update/:id",
+        "method": "PUT",
+        "module": "user",
+        "tag": "user_update",
+        "endpoint_filter": "user_update"        
+    },
+    {
+        "path": "/api/v1/user/patch/:id",
+        "method": "PATCH",
+        "module": "user",
+        "tag": "user_update",
+        "endpoint_filter": "user_update"        
+    },
+    {
+        "path": "/api/v1/user/delete/:id",
+        "method": "DELETE",
+        "module": "user",
+        "tag": "user_delete",
+        "endpoint_filter": "user_delete"
+    }    
+]

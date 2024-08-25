@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+option go_package = "github.com/pangami/user-service/transport/grpc/proto/proto";
+
+package user;
+
+service User {
+    rpc CreateUser (CreateUserRequest) returns (NoResponse);    
+    rpc DetailUser (DetailUserRequest) returns (DetailUserResponse);
+    rpc UpdateUser (UpdateUserRequest) returns (NoResponse);
+    rpc DeleteUser (DeleteUserRequest) returns (NoResponse);
+}
+
+message NoResponse {}
+
+message CreateUserRequest {
+    string username = 1;
+    string full_name = 2;
+    string password = 3;
+}
+
+message UserDetail {
+    string id = 1;
+    string username = 2;
+    string full_name = 3;
+    // Add other user fields as needed
+}
+
+message ListUserResponse {
+    repeated UserDetail users = 1; // List of users
+    int32 total_count = 2;         // Total number of users
+}
+
+message DetailUserRequest {
+    string user_id = 1; // ID of the user to retrieve details
+}
+
+message DetailUserResponse {
+    string id = 1;
+    string username = 2;
+    string full_name = 3;
+    // Add other user fields as needed
+}
+
+message UpdateUserRequest {
+    string user_id = 1; // ID of the user to update
+    string username = 2; // Updated username
+    string full_name = 3; // Updated full name
+    string password = 4;  // Updated password, if applicable
+    // Add other fields as needed for update
+}
+
+message DeleteUserRequest {
+    string user_id = 1; // ID of the user to delete
+}
