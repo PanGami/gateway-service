@@ -15,9 +15,10 @@ service User {
 message NoResponse {}
 
 message CreateUserRequest {
-    string username = 1;
-    string full_name = 2;
-    string password = 3;
+    int32 id = 1;    
+    string username = 2;
+    string full_name = 3;
+    string password = 4;
 }
 
 message DetailUserRequest {

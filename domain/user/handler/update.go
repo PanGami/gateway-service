@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/labstack/echo/v4"
 	"github.com/pangami/gateway-service/domain/user"
@@ -38,8 +39,17 @@ func (h *UserUpdate) Handle(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, &resp)
 	}
 
+	id := c.QueryParam("id")
+
+	// Convert the id string to an int32
+	userId, err := strconv.Atoi(id)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": "Invalid user ID"})
+	}
+
 	// Populate the protobuf request with data from the user.User struct
 	req := &pb.CreateUserRequest{
+		Id:       int32(userId),
 		Username: r.Username,
 		FullName: r.FullName,
 		Password: r.Password,
