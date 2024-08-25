@@ -4,9 +4,9 @@ import (
 	"context"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/labstack/echo/v4"
-	"github.com/pangami/gateway-service/domain/user"
 	"github.com/pangami/gateway-service/domain/user/client"
 
 	pb "github.com/pangami/gateway-service/proto/user"
@@ -25,22 +25,17 @@ func (h *UserDelete) Handle(c echo.Context) error {
 		ctx = context.Background()
 	}
 
-	r := new(user.UserDetailRequest)
-	err := h.validate(r, c)
+	id := c.QueryParam("id")
+
+	// Convert the id string to an int32
+	userId, err := strconv.Atoi(id)
 	if err != nil {
-		log.Println("validate error : ", err.Error())
-		resp := &user.Response{
-			Code:    400,
-			Message: util.StatusMessage[util.InvalidArgument],
-			Status:  false,
-			Data:    nil,
-		}
-		return c.JSON(http.StatusBadRequest, &resp)
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": "Invalid user ID"})
 	}
 
 	// Populate the protobuf request with data from the user.User struct
 	req := &pb.DetailUserRequest{
-		Id: r.ID,
+		Id: int32(userId), // Explicitly convert to int32
 	}
 
 	grpcResp, err := client.UserDelete(ctx, req)
@@ -81,14 +76,6 @@ func (h *UserDelete) buildErrorResponse(errorCode codes.Code, message string) (*
 		Data:    nil,
 	}
 	return resp, nil
-}
-
-func (h *UserDelete) validate(r *user.UserDetailRequest, c echo.Context) error {
-	if err := c.Bind(r); err != nil {
-		return err
-	}
-
-	return c.Validate(r)
 }
 
 func NewUserDelete() *UserDelete {
