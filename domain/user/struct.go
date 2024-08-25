@@ -15,8 +15,12 @@ type ListFilter struct {
 }
 
 type User struct {
-	ID       int    `json:"id"`
+	ID       int32  `json:"id"`
 	Username string `json:"username" validate:"required"`
 	FullName string `json:"full_name" validate:"required"`
 	Password string `json:"password" validate:"required"`
+}
+
+type UserDetailRequest struct {
+	ID int32 `json:"id"`
 }

@@ -4,7 +4,7 @@
         "method": "GET",
         "module": "user",
         "tag": "user_list",
-        "endpoint_filter": "user_list"        
+        "endpoint_filter": "user_list"
     },
     {
         "path": "/api/v1/user/create",
@@ -14,28 +14,28 @@
         "endpoint_filter": "user_create"        
     },
     {
-        "path": "/api/v1/user/detail/:id",
+        "path": "/api/v1/user/detail",
         "method": "GET",
         "module": "user",
         "tag": "user_detail",
         "endpoint_filter": "user_detail"        
     },
     {
-        "path": "/api/v1/user/update/:id",
+        "path": "/api/v1/user/update",
         "method": "PUT",
         "module": "user",
         "tag": "user_update",
         "endpoint_filter": "user_update"        
     },
     {
-        "path": "/api/v1/user/patch/:id",
+        "path": "/api/v1/user/patch",
         "method": "PATCH",
         "module": "user",
         "tag": "user_update",
         "endpoint_filter": "user_update"        
     },
     {
-        "path": "/api/v1/user/delete/:id",
+        "path": "/api/v1/user/delete",
         "method": "DELETE",
         "module": "user",
         "tag": "user_delete",
