@@ -2,12 +2,12 @@ package handler
 
 import (
 	"context"
-	"log"
 	"net/http"
 	"strconv"
 
 	"github.com/labstack/echo/v4"
 	"github.com/pangami/gateway-service/domain/user/client"
+	"github.com/pangami/gateway-service/util/errors"
 
 	pb "github.com/pangami/gateway-service/proto/user"
 	"github.com/pangami/gateway-service/util"
@@ -44,17 +44,12 @@ func (h *UserList) Handle(c echo.Context) error {
 	grpcResp, err := client.UserList(ctx, req)
 	if err != nil {
 		st, _ := status.FromError(err)
-		log.Println("ListUsers gRPC error:", err.Error())
-		resp, err := h.buildErrorResponse(st.Code(), st.Message())
-		if err != nil {
-			return err
-		}
-		return c.JSON(http.StatusInternalServerError, resp)
+		return errors.Wrap(err, st.Code(), st.Message())
 	}
 
 	resp, err := h.buildResponse(grpcResp)
 	if err != nil {
-		return err
+		return errors.Wrap(err, codes.Internal, "Failed to build response")
 	}
 
 	return c.JSON(http.StatusOK, resp)
@@ -66,16 +61,6 @@ func (h *UserList) buildResponse(response *pb.ListUsersResponse) (*util.Response
 		Code:    util.Success,
 		Message: util.StatusMessage[util.Success],
 		Data:    response,
-	}
-	return resp, nil
-}
-
-func (h *UserList) buildErrorResponse(errorCode codes.Code, message string) (*util.Response, error) {
-	resp := &util.Response{
-		Status:  "false",
-		Code:    errorCode,
-		Message: message,
-		Data:    nil,
 	}
 	return resp, nil
 }

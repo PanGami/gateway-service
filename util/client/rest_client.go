@@ -8,7 +8,6 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/pangami/gateway-service/util"
 	"github.com/pangami/gateway-service/util/errors"
 	"google.golang.org/grpc/codes"
 )
@@ -65,9 +64,9 @@ func (a *RestClient) CallAPI(method, url string, payload map[string]interface{})
 	log.Println(resp)
 	log.Println("response")
 	log.Println("==========================")
+
 	if resp.StatusCode != http.StatusOK && resp.StatusCode != http.StatusCreated {
-		var httpStatus codes.Code = codes.Code(int32(resp.StatusCode))
-		return nil, errors.ErrorMap(httpStatus, util.StatusMessage[httpStatus])
+		return nil, errors.Wrap(fmt.Errorf("HTTP error"), codes.Code(resp.StatusCode), http.StatusText(resp.StatusCode))
 	}
 
 	// Read the response body into a byte slice

@@ -8,9 +8,9 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/pangami/gateway-service/domain/user/client"
+	"github.com/pangami/gateway-service/util/errors"
 
 	pb "github.com/pangami/gateway-service/proto/user"
-	// "github.com/pangami/gateway-service/route/middleware"
 	"github.com/pangami/gateway-service/util"
 
 	"google.golang.org/grpc/codes"
@@ -30,7 +30,7 @@ func (h *UserDetail) Handle(c echo.Context) error {
 	// Convert the id string to an int32
 	userId, err := strconv.Atoi(id)
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, map[string]string{"error": "Invalid user ID"})
+		return c.JSON(http.StatusBadRequest, errors.ErrBadRequest("Invalid user ID"))
 	}
 
 	// Populate the protobuf request with data from the user.User struct
@@ -42,17 +42,18 @@ func (h *UserDetail) Handle(c echo.Context) error {
 	if err != nil {
 		st, _ := status.FromError(err)
 		log.Println("response", err.Error())
-		resp, err := h.buildErrorResponse(st.Code(), st.Message())
-		if err != nil {
-			return err
+
+		// Handle not found error
+		if st.Code() == codes.NotFound {
+			return c.JSON(http.StatusNotFound, errors.ErrNotFound("User not found"))
 		}
 
-		return c.JSON(http.StatusInternalServerError, resp)
+		return c.JSON(http.StatusInternalServerError, errors.Wrap(err, st.Code(), st.Message()))
 	}
 
 	resp, err := h.buildResponse(grpcResp)
 	if err != nil {
-		return err
+		return c.JSON(http.StatusInternalServerError, errors.Wrap(err, codes.Internal, "Failed to build response"))
 	}
 
 	return c.JSON(http.StatusOK, resp)
@@ -64,16 +65,6 @@ func (h *UserDetail) buildResponse(response *pb.DetailUserResponse) (*util.Respo
 		Code:    util.Success,
 		Message: util.StatusMessage[util.Success],
 		Data:    response,
-	}
-	return resp, nil
-}
-
-func (h *UserDetail) buildErrorResponse(errorCode codes.Code, message string) (*util.Response, error) {
-	resp := &util.Response{
-		Status:  "false",
-		Code:    errorCode,
-		Message: message,
-		Data:    nil,
 	}
 	return resp, nil
 }

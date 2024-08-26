@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
+	"github.com/pangami/gateway-service/middleware"
 	"github.com/pangami/gateway-service/route"
 	"github.com/pangami/gateway-service/util"
 )
@@ -17,6 +18,8 @@ func main() {
 	}
 
 	e := route.Init()
+	e.Use(middleware.ErrorHandlerMiddleware)
+
 	data, err := util.Json.MarshalIndent(e.Routes(), "", "  ")
 	if err != nil {
 		panic(fmt.Sprint(err))
