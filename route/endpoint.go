@@ -22,4 +22,7 @@ var endpoint = map[string]Handler{
 	"user_detail": user.NewUserDetail(),
 	"user_update": user.NewUserUpdate(),
 	"user_delete": user.NewUserDelete(),
+
+	//userActivity
+	"user_activity": user.NewUserGetActivity(),
 }

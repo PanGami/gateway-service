@@ -9,7 +9,8 @@ service User {
     rpc DetailUser (DetailUserRequest) returns (DetailUserResponse);
     rpc UpdateUser (CreateUserRequest) returns (NoResponse);
     rpc DeleteUser (DetailUserRequest) returns (NoResponse);
-    rpc ListUsers (ListUsersRequest) returns (ListUsersResponse); // New RPC for listing users
+    rpc ListUsers (ListUsersRequest) returns (ListUsersResponse);
+    rpc GetUserActivities (DetailUserRequest) returns (UserActivitiesResponse);
 }
 
 message NoResponse {}
@@ -45,4 +46,14 @@ message ListUsersResponse {
 message Data {
   int32 id = 1;
   string username = 2;
+}
+
+message UserActivityResponse {
+    int32 id = 1;
+    string action = 2;
+    string timestamp = 3;
+}
+
+message UserActivitiesResponse {
+    repeated UserActivityResponse activities = 1;
 }

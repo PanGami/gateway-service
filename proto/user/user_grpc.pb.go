@@ -19,11 +19,12 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	User_CreateUser_FullMethodName = "/user.User/CreateUser"
-	User_DetailUser_FullMethodName = "/user.User/DetailUser"
-	User_UpdateUser_FullMethodName = "/user.User/UpdateUser"
-	User_DeleteUser_FullMethodName = "/user.User/DeleteUser"
-	User_ListUsers_FullMethodName  = "/user.User/ListUsers"
+	User_CreateUser_FullMethodName        = "/user.User/CreateUser"
+	User_DetailUser_FullMethodName        = "/user.User/DetailUser"
+	User_UpdateUser_FullMethodName        = "/user.User/UpdateUser"
+	User_DeleteUser_FullMethodName        = "/user.User/DeleteUser"
+	User_ListUsers_FullMethodName         = "/user.User/ListUsers"
+	User_GetUserActivities_FullMethodName = "/user.User/GetUserActivities"
 )
 
 // UserClient is the client API for User service.
@@ -35,6 +36,7 @@ type UserClient interface {
 	UpdateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*NoResponse, error)
 	DeleteUser(ctx context.Context, in *DetailUserRequest, opts ...grpc.CallOption) (*NoResponse, error)
 	ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (*ListUsersResponse, error)
+	GetUserActivities(ctx context.Context, in *DetailUserRequest, opts ...grpc.CallOption) (*UserActivitiesResponse, error)
 }
 
 type userClient struct {
@@ -95,6 +97,16 @@ func (c *userClient) ListUsers(ctx context.Context, in *ListUsersRequest, opts .
 	return out, nil
 }
 
+func (c *userClient) GetUserActivities(ctx context.Context, in *DetailUserRequest, opts ...grpc.CallOption) (*UserActivitiesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UserActivitiesResponse)
+	err := c.cc.Invoke(ctx, User_GetUserActivities_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServer is the server API for User service.
 // All implementations must embed UnimplementedUserServer
 // for forward compatibility.
@@ -104,6 +116,7 @@ type UserServer interface {
 	UpdateUser(context.Context, *CreateUserRequest) (*NoResponse, error)
 	DeleteUser(context.Context, *DetailUserRequest) (*NoResponse, error)
 	ListUsers(context.Context, *ListUsersRequest) (*ListUsersResponse, error)
+	GetUserActivities(context.Context, *DetailUserRequest) (*UserActivitiesResponse, error)
 	mustEmbedUnimplementedUserServer()
 }
 
@@ -128,6 +141,9 @@ func (UnimplementedUserServer) DeleteUser(context.Context, *DetailUserRequest) (
 }
 func (UnimplementedUserServer) ListUsers(context.Context, *ListUsersRequest) (*ListUsersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListUsers not implemented")
+}
+func (UnimplementedUserServer) GetUserActivities(context.Context, *DetailUserRequest) (*UserActivitiesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserActivities not implemented")
 }
 func (UnimplementedUserServer) mustEmbedUnimplementedUserServer() {}
 func (UnimplementedUserServer) testEmbeddedByValue()              {}
@@ -240,6 +256,24 @@ func _User_ListUsers_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _User_GetUserActivities_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DetailUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).GetUserActivities(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_GetUserActivities_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).GetUserActivities(ctx, req.(*DetailUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // User_ServiceDesc is the grpc.ServiceDesc for User service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -266,6 +300,10 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListUsers",
 			Handler:    _User_ListUsers_Handler,
+		},
+		{
+			MethodName: "GetUserActivities",
+			Handler:    _User_GetUserActivities_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

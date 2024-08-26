@@ -46,5 +46,13 @@
         "tag": "user_delete",
         "endpoint_filter": "user_delete",
         "middleware": []
-    }    
+    },
+    {
+        "path": "/api/v1/user/activity",
+        "method": "GET",
+        "module": "user",
+        "tag": "user_activity",
+        "endpoint_filter": "user_activity",
+        "middleware": []
+    }
 ]
