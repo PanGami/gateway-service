@@ -1,0 +1,58 @@
+[
+    {
+        "path": "/api/v1/user/list",
+        "method": "GET",
+        "module": "user",
+        "tag": "user_list",
+        "endpoint_filter": "user_list",
+        "middleware": []
+    },
+    {
+        "path": "/api/v1/user/create",
+        "method": "POST",
+        "module": "user",
+        "tag": "user_create",
+        "endpoint_filter": "user_create",
+        "middleware": []       
+    },
+    {
+        "path": "/api/v1/user/detail",
+        "method": "GET",
+        "module": "user",
+        "tag": "user_detail",
+        "endpoint_filter": "user_detail",
+        "middleware": []    
+    },
+    {
+        "path": "/api/v1/user/update",
+        "method": "PUT",
+        "module": "user",
+        "tag": "user_update",
+        "endpoint_filter": "user_update",
+        "middleware": []
+    },
+    {
+        "path": "/api/v1/user/patch",
+        "method": "PATCH",
+        "module": "user",
+        "tag": "user_update",
+        "endpoint_filter": "user_update",
+        "middleware": []
+    },
+    {
+        "path": "/api/v1/user/delete",
+        "method": "DELETE",
+        "module": "user",
+        "tag": "user_delete",
+        "endpoint_filter": "user_delete",
+        "middleware": []
+    },
+    {
+        "path": "/api/v1/user/activity",
+        "method": "GET",
+        "module": "user",
+        "tag": "user_activity",
+        "endpoint_filter": "user_activity",
+        "middleware": []
+    }
+]
