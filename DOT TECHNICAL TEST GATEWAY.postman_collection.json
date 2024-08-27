@@ -1,0 +1,209 @@
+{
+	"info": {
+		"_postman_id": "2f3f8731-58af-4d42-9506-7843a38911af",
+		"name": "DOT TECHNICAL TEST GATEWAY",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16801639",
+		"_collection_link": "https://crimson-spaceship-413050.postman.co/workspace/My-Workspace~a107b9f3-d673-4b02-8dc6-d79b47626d88/collection/16801639-2f3f8731-58af-4d42-9506-7843a38911af?action=share&source=collection_link&creator=16801639"
+	},
+	"item": [
+		{
+			"name": "USER SERVICE",
+			"item": [
+				{
+					"name": "LIST USERS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/user/list?page=1&page_size=5",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"list"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "page_size",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE USER",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"panca\",\r\n    \"full_name\":\"panca\",\r\n    \"password\":\"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/user/create",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DETAIL USER",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/user/detail?id=1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"detail"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET USER ACTIVITY",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/user/activity?id=114",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"activity"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "114"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE USER",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"pan\",\r\n    \"full_name\":\"pancaUpdated\",\r\n    \"password\":\"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/user/update?id=1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"update"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE USER",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"pan\",\r\n    \"full_name\":\"pancaUpdated\",\r\n    \"password\":\"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/user/patch?id=111",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"patch"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "111"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE USER",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/user/delete?id=4",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
