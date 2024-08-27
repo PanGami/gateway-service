@@ -1,8 +1,4 @@
-Here's a beautified and structured version of your `readme.md`:
-
----
-
-# Technical Test DOT
+# Technical Test DOT - [gateway-service](https://github.com/PanGami/gateway-service)
 
 ## Project Structure
 
